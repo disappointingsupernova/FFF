@@ -40,7 +40,6 @@ edit "example.com"
 next
 
 edit "ST_Host_192.168.1.1"
-    set type fqdn
     set color 9
     set subnet 192.168.1.1 255.255.255.255
 next
