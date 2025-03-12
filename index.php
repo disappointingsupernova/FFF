@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FortiGate FQDN & IP Sorter</title>
+    <title>FFF - FortiGate FQDN (& IP) Formatter</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler@latest/dist/css/tabler.min.css">
     <style>
         .output-container {
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="theme-light">
     <div class="container mt-4">
-        <h2 class="mb-4">FortiGate FQDN & IP Sorter</h2>
+        <h2 class="mb-4">FortiGate FQDN (& IP) Formatter</h2>
         <form id="inputForm" method="post" oninput="updateOutput()">
             <div class="mb-3">
                 <textarea name="input" class="form-control" rows="5" placeholder="Enter FQDNs and IPs here..."><?php echo htmlspecialchars($_POST['input'] ?? ''); ?></textarea>
