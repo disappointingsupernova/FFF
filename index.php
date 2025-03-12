@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     foreach ($entries as $entry) {
         if (filter_var($entry, FILTER_VALIDATE_IP)) {
-            $ips[] = $entry;
+            $ips[] = "ST_Host_$entry";
         } elseif (preg_match('/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $entry)) {
             $fqdns[] = $entry;
         }
@@ -33,9 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function generateIpBlocks($list, $color) {
         $output = "";
         foreach ($list as $item) {
-            $output .= "edit \"ST_Host_$item\"\n";
+            $ip = str_replace("ST_Host_", "", $item);
+            $output .= "edit \"$item\"\n";
             $output .= "    set color $color\n";
-            $output .= "    set subnet $item 255.255.255.255\n";
+            $output .= "    set subnet $ip 255.255.255.255\n";
             $output .= "next\n\n";
         }
         return $output;
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Generate formatted CSV lines
     $fqdn_csv = !empty($fqdns) ? '"' . implode('" "', $fqdns) . '"' : "No FQDNs found.";
-    $ip_csv = !empty($ips) ? '"' . implode('" "ST_Host_', $ips) . '"' : "No IPs found.";
+    $ip_csv = !empty($ips) ? '"' . implode('" "', $ips) . '"' : "No IPs found.";
 }
 ?>
 
