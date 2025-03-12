@@ -50,14 +50,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ip_csv = !empty($ips) ? '"' . implode('" "', $ips) . '"' : "No IPs found.";
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FQDN & IP Sorter</title>
+    <title>FortiGate FQDN & IP Sorter</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler@latest/dist/css/tabler.min.css">
+    <style>
+        .output-container {
+            display: flex;
+            gap: 20px;
+        }
+        .output-box {
+            flex: 1;
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+    </style>
     <script>
         function updateOutput() {
             const form = document.getElementById("inputForm");
@@ -87,27 +100,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
 
-        <h3 class="mt-4">FQDN Entries</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                <pre id="fqdn-output" class="bg-light p-3 border rounded"><?php echo $fqdn_output; ?></pre>
+        <h3 class="mt-4">Formatted Entries</h3>
+        <div class="output-container">
+            <div class="output-box">
+                <pre id="fqdn-output"><?php echo $fqdn_output; ?></pre>
             </div>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <p><strong>Formatted FQDNs:</strong> <span id="fqdn-list" class="text-monospace"><?php echo $fqdn_csv; ?></span></p>
+            <div class="output-box">
+                <pre id="ip-output"><?php echo $ip_output; ?></pre>
             </div>
         </div>
 
-        <h3 class="mt-4">IP Entries</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                <pre id="ip-output" class="bg-light p-3 border rounded"><?php echo $ip_output; ?></pre>
+        <h3 class="mt-4">Formatted Lists</h3>
+        <div class="output-container">
+            <div class="output-box">
+                <p><span id="fqdn-list" class="text-monospace"><?php echo $fqdn_csv; ?></span></p>
             </div>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <p><strong>Formatted IPs:</strong> <span id="ip-list" class="text-monospace"><?php echo $ip_csv; ?></span></p>
+            <div class="output-box">
+                <p><span id="ip-list" class="text-monospace"><?php echo $ip_csv; ?></span></p>
             </div>
         </div>
     </div>
