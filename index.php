@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fqdn_output = generateFqdnBlocks($fqdns, $color);
     $ip_output = generateIpBlocks($ips, $color);
     
-    // Generate CSV lines
-    $fqdn_csv = !empty($fqdns) ? implode(", ", $fqdns) : "No FQDNs found.";
-    $ip_csv = !empty($ips) ? implode(", ", $ips) : "No IPs found.";
+    // Generate formatted CSV lines
+    $fqdn_csv = !empty($fqdns) ? '"' . implode('" "', $fqdns) . '"' : "No FQDNs found.";
+    $ip_csv = !empty($ips) ? '"' . implode('" "ST_Host_', $ips) . '"' : "No IPs found.";
 }
 ?>
 
