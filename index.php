@@ -85,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="color" class="form-label">Colour:</label>
                 <input type="number" name="color" id="color" class="form-control" min="1" max="32" value="<?php echo htmlspecialchars($_POST['color'] ?? '9'); ?>">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
         <h3 class="mt-4">FQDN Entries</h3>
