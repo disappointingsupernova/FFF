@@ -66,7 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 .then(response => response.text())
                 .then(html => {
                     const parser = new DOMParser().parseFromString(html, "text/html");
-                    document.getElementById("output").innerHTML = parser.getElementById("output").innerHTML;
+                    document.getElementById("fqdn-output").innerHTML = parser.getElementById("fqdn-output").innerHTML;
+                    document.getElementById("ip-output").innerHTML = parser.getElementById("ip-output").innerHTML;
                     document.getElementById("fqdn-list").innerText = parser.getElementById("fqdn-list").innerText;
                     document.getElementById("ip-list").innerText = parser.getElementById("ip-list").innerText;
                 });
@@ -81,23 +82,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <textarea name="input" class="form-control" rows="5" placeholder="Enter FQDNs and IPs here..."><?php echo htmlspecialchars($_POST['input'] ?? ''); ?></textarea>
             </div>
             <div class="mb-3">
-                <label for="color" class="form-label">Color:</label>
+                <label for="color" class="form-label">Colour:</label>
                 <input type="number" name="color" id="color" class="form-control" min="1" max="32" value="<?php echo htmlspecialchars($_POST['color'] ?? '9'); ?>">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        
-        <h3 class="mt-4">Generated Output:</h3>
-        <pre id="output" class="bg-light p-3 border rounded">
-            <?php if (!empty($fqdn_output) || !empty($ip_output)) { 
-                echo "# FQDN Entries\n" . $fqdn_output;
-                echo "# IP Entries\n" . $ip_output;
-            } ?>
-        </pre>
-        
-        <h3 class="mt-4">Comma-Separated Lists:</h3>
-        <p><strong>FQDNs:</strong> <span id="fqdn-list" class="text-monospace"><?php echo $fqdn_csv; ?></span></p>
-        <p><strong>IPs:</strong> <span id="ip-list" class="text-monospace"><?php echo $ip_csv; ?></span></p>
+
+        <h3 class="mt-4">FQDN Entries</h3>
+        <div class="card mb-3">
+            <div class="card-body">
+                <pre id="fqdn-output" class="bg-light p-3 border rounded"><?php echo $fqdn_output; ?></pre>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>Formatted FQDNs:</strong> <span id="fqdn-list" class="text-monospace"><?php echo $fqdn_csv; ?></span></p>
+            </div>
+        </div>
+
+        <h3 class="mt-4">IP Entries</h3>
+        <div class="card mb-3">
+            <div class="card-body">
+                <pre id="ip-output" class="bg-light p-3 border rounded"><?php echo $ip_output; ?></pre>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>Formatted IPs:</strong> <span id="ip-list" class="text-monospace"><?php echo $ip_csv; ?></span></p>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/tabler@latest/dist/js/tabler.min.js"></script>
 </body>
