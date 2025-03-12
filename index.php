@@ -31,6 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $fqdn_output = generateEditBlocks($fqdns, $color);
     $ip_output = generateEditBlocks($ips, $color);
+    
+    // Generate CSV lines
+    $fqdn_csv = !empty($fqdns) ? implode(", ", $fqdns) : "No FQDNs found.";
+    $ip_csv = !empty($ips) ? implode(", ", $ips) : "No IPs found.";
 }
 ?>
 
@@ -72,5 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "# IP Entries\n" . $ip_output;
         } ?>
     </pre>
+    
+    <h3>Comma-Separated Lists:</h3>
+    <p><strong>FQDNs:</strong> <?php echo $fqdn_csv; ?></p>
+    <p><strong>IPs:</strong> <?php echo $ip_csv; ?></p>
 </body>
 </html>
