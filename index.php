@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="theme-light">
     <div class="container mt-4">
-        <h2 class="mb-4">FQDN & IP Sorter</h2>
+        <h2 class="mb-4">FortiGate FQDN & IP Sorter</h2>
         <form id="inputForm" method="post" oninput="updateOutput()">
             <div class="mb-3">
                 <textarea name="input" class="form-control" rows="5" placeholder="Enter FQDNs and IPs here..."><?php echo htmlspecialchars($_POST['input'] ?? ''); ?></textarea>
