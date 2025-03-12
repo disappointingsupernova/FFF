@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FQDN & IP Sorter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler@latest/dist/css/tabler.min.css">
     <script>
         function updateOutput() {
             const form = document.getElementById("inputForm");
@@ -72,27 +73,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </head>
-<body>
-    <h2>FQDN & IP Sorter</h2>
-    <form id="inputForm" method="post" oninput="updateOutput()">
-        <textarea name="input" rows="5" cols="50" placeholder="Enter FQDNs and IPs here..."><?php echo htmlspecialchars($_POST['input'] ?? ''); ?></textarea>
-        <br>
-        <label for="color">Color:</label>
-        <input type="number" name="color" id="color" min="1" max="32" value="<?php echo htmlspecialchars($_POST['color'] ?? '9'); ?>">
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-    
-    <h3>Generated Output:</h3>
-    <pre id="output">
-        <?php if (!empty($fqdn_output) || !empty($ip_output)) { 
-            echo "# FQDN Entries\n" . $fqdn_output;
-            echo "# IP Entries\n" . $ip_output;
-        } ?>
-    </pre>
-    
-    <h3>Comma-Separated Lists:</h3>
-    <p><strong>FQDNs:</strong> <span id="fqdn-list"><?php echo $fqdn_csv; ?></span></p>
-    <p><strong>IPs:</strong> <span id="ip-list"><?php echo $ip_csv; ?></span></p>
+<body class="theme-light">
+    <div class="container mt-4">
+        <h2 class="mb-4">FQDN & IP Sorter</h2>
+        <form id="inputForm" method="post" oninput="updateOutput()">
+            <div class="mb-3">
+                <textarea name="input" class="form-control" rows="5" placeholder="Enter FQDNs and IPs here..."><?php echo htmlspecialchars($_POST['input'] ?? ''); ?></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="color" class="form-label">Color:</label>
+                <input type="number" name="color" id="color" class="form-control" min="1" max="32" value="<?php echo htmlspecialchars($_POST['color'] ?? '9'); ?>">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+        <h3 class="mt-4">Generated Output:</h3>
+        <pre id="output" class="bg-light p-3 border rounded">
+            <?php if (!empty($fqdn_output) || !empty($ip_output)) { 
+                echo "# FQDN Entries\n" . $fqdn_output;
+                echo "# IP Entries\n" . $ip_output;
+            } ?>
+        </pre>
+        
+        <h3 class="mt-4">Comma-Separated Lists:</h3>
+        <p><strong>FQDNs:</strong> <span id="fqdn-list" class="text-monospace"><?php echo $fqdn_csv; ?></span></p>
+        <p><strong>IPs:</strong> <span id="ip-list" class="text-monospace"><?php echo $ip_csv; ?></span></p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tabler@latest/dist/js/tabler.min.js"></script>
 </body>
 </html>
