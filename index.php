@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Generate edit blocks
-    function generateEditBlocks($list, $color) {
+    // Generate edit blocks for FQDNs
+    function generateFqdnBlocks($list, $color) {
         $output = "";
         foreach ($list as $item) {
             $output .= "edit \"$item\"\n";
@@ -29,8 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return $output;
     }
     
-    $fqdn_output = generateEditBlocks($fqdns, $color);
-    $ip_output = generateEditBlocks($ips, $color);
+    // Generate edit blocks for IPs
+    function generateIpBlocks($list, $color) {
+        $output = "";
+        foreach ($list as $item) {
+            $output .= "edit \"ST_Host_$item\"\n";
+            $output .= "    set color $color\n";
+            $output .= "    set subnet $item 255.255.255.255\n";
+            $output .= "next\n\n";
+        }
+        return $output;
+    }
+    
+    $fqdn_output = generateFqdnBlocks($fqdns, $color);
+    $ip_output = generateIpBlocks($ips, $color);
     
     // Generate CSV lines
     $fqdn_csv = !empty($fqdns) ? implode(", ", $fqdns) : "No FQDNs found.";
@@ -51,9 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             fetch("", { method: "POST", body: formData })
                 .then(response => response.text())
                 .then(html => {
-                    document.getElementById("output").innerHTML = 
-                        new DOMParser().parseFromString(html, "text/html")
-                        .getElementById("output").innerHTML;
+                    const parser = new DOMParser().parseFromString(html, "text/html");
+                    document.getElementById("output").innerHTML = parser.getElementById("output").innerHTML;
+                    document.getElementById("fqdn-list").innerText = parser.getElementById("fqdn-list").innerText;
+                    document.getElementById("ip-list").innerText = parser.getElementById("ip-list").innerText;
                 });
         }
     </script>
@@ -78,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </pre>
     
     <h3>Comma-Separated Lists:</h3>
-    <p><strong>FQDNs:</strong> <?php echo $fqdn_csv; ?></p>
-    <p><strong>IPs:</strong> <?php echo $ip_csv; ?></p>
+    <p><strong>FQDNs:</strong> <span id="fqdn-list"><?php echo $fqdn_csv; ?></span></p>
+    <p><strong>IPs:</strong> <span id="ip-list"><?php echo $ip_csv; ?></span></p>
 </body>
 </html>
